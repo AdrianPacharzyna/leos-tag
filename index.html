@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leos Interaktiver Stundenplan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Leos Reise durch die Schule 2030</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.js"></script>
     <style>
         :root {
@@ -17,6 +17,9 @@
             --color-bg-medium: #f3eada;
             --color-text: #3a3a3a;
             --color-text-light: #6b664d;
+            --color-scene-1: #f4f5f0;
+            --color-scene-2: #fdf2ef;
+            --color-scene-3: #f2f2f4;
         }
         
         html { scroll-behavior: smooth; }
@@ -25,345 +28,349 @@
             font-family: 'EB Garamond', serif;
             background-color: var(--color-bg-light);
             color: var(--color-text);
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f3eada' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
-        .main-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: rgba(253, 250, 242, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 1.5rem;
-            border: 1px solid var(--color-bg-medium);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
-        }
-
-        h1.main-title { color: var(--color-primary); font-size: 2.5rem; font-weight: 700; }
-        p.subtitle { color: var(--color-text-light); font-size: 1.2rem; font-style: italic; }
-
-        .timetable-entry {
+        .scene {
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding: 1rem;
-            border: 2px solid var(--color-bg-medium);
-            border-radius: 0.75rem;
-            margin-bottom: 0.75rem;
-            background-color: #f9f8f2;
-            transition: all 0.3s ease;
+            text-align: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            position: relative;
         }
-        .timetable-entry.locked {
-            background-color: #f5f5f5;
-            color: #b0b0b0;
-            cursor: not-allowed;
-            opacity: 0.7;
+
+        .scene-content {
+            max-width: 650px;
+            animation: fadeIn 1s ease-in-out forwards;
         }
-        .timetable-entry.active {
-            cursor: pointer;
-            background-color: white;
-            border-color: var(--color-accent);
-            box-shadow: 0 4px 15px rgba(146, 138, 93, 0.1);
-            transform: scale(1.02);
-            animation: pulse-active 2s infinite;
-        }
-        .timetable-entry.completed {
-            background-color: #eef2e9;
-            border-color: #a3b18a;
-            opacity: 0.8;
-        }
-        .timetable-entry .time {
-            font-weight: 600;
-            width: 80px;
-            flex-shrink: 0;
-            color: var(--color-primary);
-        }
-        .timetable-entry .icon {
-            width: 24px;
-            height: 24px;
-            margin: 0 1rem;
-            color: var(--color-accent);
-        }
-        .timetable-entry.completed .icon { color: #8a815c; }
-        .timetable-entry .title {
-            font-weight: 600;
-            font-size: 1.2rem;
-            flex-grow: 1;
-        }
-        .timetable-entry.locked .title { color: #b0b0b0; }
-        .timetable-entry.locked .icon { color: #d1d5db; }
         
-        .progress-bar-container {
-            width: 100%;
-            background-color: var(--color-bg-medium);
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            overflow: hidden;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .progress-bar {
-            width: 0%;
-            height: 10px;
-            background-color: var(--color-accent);
-            transition: width 0.5s ease-in-out;
+
+        .scene-icon {
+            width: 80px;
+            height: 80px;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+            stroke-width: 1.5;
+        }
+
+        .scene-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        .scene-text {
+            font-size: 1.25rem;
+            color: var(--color-text-light);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+        }
+
+        .scroll-down-btn {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--color-primary);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-20px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-10px);
+            }
         }
 
         .summary-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
-        }
-        .summary-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .summary-section h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--color-primary);
-            margin-top: 2.5em;
-            margin-bottom: 1em;
-            border-bottom: 1px solid var(--color-bg-medium);
-            padding-bottom: 0.3em;
-        }
-        .summary-section p, .summary-section li {
-            text-align: justify;
-            font-size: 1.1rem;
-        }
-        .summary-section ul {
-            list-style-position: inside;
-            padding-left: 0;
-        }
-        .literature-list li {
-            text-indent: -1.5em;
-            padding-left: 1.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .hidden { display: none; }
-
-        .modal-backdrop {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(58, 58, 58, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 50;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-            display: none; /* Changed from hidden to none for initial state */
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-backdrop.open { 
-            display: flex; 
-            opacity: 1; /* Add this to control opacity transition */
-        }
-        .modal-container {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            width: 90%;
-            max-width: 650px;
-            transform: scale(0.95);
-            transition: transform 0.3s ease-in-out;
-        }
-        .modal-backdrop.open .modal-container { transform: scale(1); }
-        .modal-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--color-bg-medium);
-        }
-        .modal-header h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--color-primary);
-        }
-        .modal-body {
-            padding: 1.5rem;
-            line-height: 1.8;
-            text-align: justify;
-        }
-        .modal-body strong {
-            color: var(--color-primary);
-            font-weight: 600;
-        }
-        .modal-footer {
-            padding: 1rem 1.5rem;
-            background-color: var(--color-bg-light);
-            text-align: right;
-            border-top: 1px solid var(--color-bg-medium);
-        }
-        .modal-close-btn {
-            background-color: var(--color-primary);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-        .modal-close-btn:hover {
-            background-color: #736b4f;
+            background-color: #fff;
+            padding: 4rem 2rem;
         }
         
-        @keyframes pulse-active {
-            0% { box-shadow: 0 0 0 0 rgba(212, 162, 101, 0.4); }
-            70% { box-shadow: 0 4px 15px 10px rgba(212, 162, 101, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(212, 162, 101, 0); }
+        .summary-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-align: center;
+        }
+
+        .summary-section .subtitle {
+             font-size: 1.2rem;
+            color: var(--color-text-light);
+            font-style: italic;
+            text-align: center;
+            margin-top: 0.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .pillar-card {
+            background-color: var(--color-bg-light);
+            border: 1px solid var(--color-bg-medium);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: left;
+        }
+        
+        .pillar-card h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .pillar-card p {
+            text-align: justify;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .fact-icon-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: var(--color-bg-medium);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        .fact-icon-wrapper:hover {
+            background-color: var(--color-accent);
+        }
+        .fact-icon-wrapper .fact-icon {
+            width: 18px;
+            height: 18px;
+            color: var(--color-primary);
+            transition: color 0.2s ease;
+        }
+        .fact-icon-wrapper:hover .fact-icon {
+            color: white;
+        }
+
+        #fact-popover {
+            position: absolute;
+            background-color: white;
+            border: 1px solid var(--color-bg-medium);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 1rem;
+            width: 280px;
+            z-index: 100;
+            opacity: 0;
+            transform: scale(0.95) translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+        #fact-popover.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        #fact-popover-text {
+            text-align: justify;
+        }
+        #fact-popover-arrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
         }
     </style>
 </head>
-<body class="p-4 md:p-8">
-    <div class="main-container">
-        <header class="text-center mb-12">
-            <img src="https://i.ibb.co/g6dZkPj/leo-avatar-final.png" alt="Avatar von Leo" class="w-24 h-24 mx-auto rounded-full mb-4 shadow-lg border-4" style="border-color: var(--color-bg-medium);">
-            <h1 class="main-title">Leos interaktiver Stundenplan</h1>
-            <p class="subtitle">Ein Tag in der Schule im Jahr 2030</p>
-        </header>
+<body>
 
-        <div class="progress-bar-container">
-            <div id="progress-bar" class="progress-bar"></div>
-        </div>
-
-        <div id="timetable-container">
-        </div>
-
-        <div id="summary-section" class="summary-section hidden">
-            <div class="bg-white p-8 rounded-lg mt-12 border border-[var(--color-bg-medium)]">
-                <h2 class="!mt-0">Analyse: Die Säulen der Schule 2030</h2>
-                <p>Leos erlebter Schultag ist keine Utopie, sondern basiert auf bewährten Praktiken und wissenschaftlichen Erkenntnissen. Die Vision ruht auf drei untrennbar miteinander verbundenen Säulen.</p>
-                
-                <h2>Säule 1: Eine neue Kultur des Lehrens und Lernens</h2>
-                <p>Das Herzstück ist ein Wandel weg von der reinen Wissensvermittlung hin zur aktiven Kompetenzentwicklung. Lehrkräfte werden zu Lernbegleitern, die in Teams agieren. Der Fokus liegt auf der Förderung von Zukunftskompetenzen (4K) durch projektbasiertes Lernen und formatives Feedback anstelle von reinen Ziffernnoten.</p>
-                
-                <h2>Säule 2: Gelebte und gestaltete Inklusion</h2>
-                <p>Vielfalt wird als Normalfall und Bereicherung verstanden. Multiprofessionelle Teams aus Lehrkräften, Sonderpädagogen und Sozialarbeitern gestalten den Unterricht gemeinsam (Team-Teaching), um allen Schüler:innen gerecht zu werden. Gute inklusive Pädagogik ist gute Pädagogik für alle.</p>
-
-                <h2>Säule 3: Schule als gesunder und inspirierender Lebensraum</h2>
-                <p>Die Architektur wird zum "dritten Pädagogen". Starre Klassenzimmer weichen flexiblen Lernlandschaften, die Interaktion und unterschiedliche Lernformen fördern. Gleichzeitig wird die mentale Gesundheit von Schüler:innen und Lehrkräften zur Kernaufgabe der Schulentwicklung.</p>
-
-                <h2 class="mt-12">Literaturverzeichnis & Quellen</h2>
-                <ul class="literature-list">
-                    <li>Kammerl, R. (2020). Digitale Medien und Schule. Bildung und Erziehung, 73(2), S. 107-122.</li>
-                    <li>Stalder, F. (2019). Kultur der Digitalität. 4. Aufl. Berlin: Suhrkamp.</li>
-                </ul>
+    <div id="app-container">
+        
+        <section id="scene-start" class="scene" style="background-color: var(--color-bg-light);">
+            <div class="scene-content">
+                <img src="https://i.postimg.cc/2jn5TvFS/unnamed.png" alt="Avatar von Leo" class="w-32 h-32 mx-auto rounded-full mb-2 shadow-lg border-4 object-cover" style="border-color: white;">
+                <p class="text-xs italic text-gray-400 mb-4">Avatar KI-generiert</p>
+                <h1 class="text-4xl md:text-5xl font-bold" style="color: var(--color-primary);">Leos Reise durch die Schule 2030</h1>
+                <p class="text-xl italic mt-4" style="color: var(--color-text-light);">Ein Tag in der Schule im Jahr 2030</p>
+                <p class="mt-8 scene-text">Dies ist ein fiktiver Schulalltag des Siebtklässlers Leo, den wir begleiten, um eine Vision für eine wünschenswerte Schule der Zukunft greifbar zu machen.</p>
             </div>
-        </div>
+            <a href="#scene-ankunft" class="scroll-down-btn">
+                <i data-lucide="arrow-down" class="w-10 h-10"></i>
+            </a>
+        </section>
+
+        <section id="scene-ankunft" class="scene" style="background-color: var(--color-scene-1);">
+            <div class="scene-content">
+                <i data-lucide="home" class="scene-icon"></i>
+                <h2 class="scene-title">8:00 - 9:30: Ankunft & Lernzeit</h2>
+                <p class="scene-text">Leo betritt kein Klassenzimmer, sondern sein 'Lerncluster'. An seinem Tablet checkt er seinen persönlichen Plan und entscheidet, wo und wie er an seinen Zielen arbeiten möchte. <strong>Hier steht personalisiertes Lernen im Mittelpunkt.</strong></p>
+            </div>
+            <a href="#scene-workshop" class="scroll-down-btn">
+                <i data-lucide="arrow-down" class="w-10 h-10"></i>
+            </a>
+        </section>
+
+        <section id="scene-workshop" class="scene" style="background-color: var(--color-scene-2);">
+            <div class="scene-content">
+                <i data-lucide="users" class="scene-icon"></i>
+                <h2 class="scene-title">9:50 - 10:35: Inklusiver Workshop</h2>
+                <p class="scene-text">Im Englisch-Workshop unterrichten zwei Lehrkräfte im Team-Teaching. So kann eine Schülerin mit LRS gezielt gefördert werden, während Leo einem neuen Mitschüler bei der Aussprache hilft. <strong>Hier wird Vielfalt als Stärke gelebt.</strong></p>
+            </div>
+             <a href="#scene-projekt" class="scroll-down-btn">
+                <i data-lucide="arrow-down" class="w-10 h-10"></i>
+            </a>
+        </section>
+
+        <section id="scene-projekt" class="scene" style="background-color: var(--color-scene-3);">
+            <div class="scene-content">
+                <i data-lucide="lightbulb" class="scene-icon"></i>
+                <h2 class="scene-title">10:50 - 12:20: Projektarbeit</h2>
+                <p class="scene-text">Leos Gruppe arbeitet am Projekt 'Nachhaltige Stadt'. Es geht weniger darum, Fakten auswendig zu lernen, als vielmehr darum, Fähigkeiten wie Kreativität, Kommunikation und Teamfähigkeit an einem realen Problem anzuwenden. <strong>Ein solcher Ansatz legt den Grundstein für eine moderne Kompetenzorientierung.</strong></p>
+            </div>
+             <a href="#scene-pause" class="scroll-down-btn">
+                <i data-lucide="arrow-down" class="w-10 h-10"></i>
+            </a>
+        </section>
+
+        <section id="scene-pause" class="scene" style="background-color: #f9f8f2;">
+            <div class="scene-content">
+                <i data-lucide="coffee" class="scene-icon"></i>
+                <h2 class="scene-title">12:20 - 13:15: Mittagspause</h2>
+                <p class="scene-text">Die Pause findet in der "Lern-Oase" statt – einem offenen Raum zum Essen, Reden und Entspannen. Die Architektur selbst fördert die Gemeinschaft. <strong>Hier wird Schule zum Lebensraum.</strong></p>
+            </div>
+             <a href="#scene-feedback" class="scroll-down-btn">
+                <i data-lucide="arrow-down" class="w-10 h-10"></i>
+            </a>
+        </section>
+
+        <section id="scene-feedback" class="scene" style="background-color: var(--color-scene-1);">
+            <div class="scene-content">
+                <i data-lucide="message-square" class="scene-icon"></i>
+                <h2 class="scene-title">13:15 - 13:30: Lerngespräch</h2>
+                <p class="scene-text">Statt einer Note bekommt Leo ein persönliches Gespräch. Anhand seines digitalen Portfolios bespricht er mit seinem Lernbegleiter seine Fortschritte und nächsten Ziele. Ziffernnoten verlieren an Gewicht. <strong>Hier zählt formatives Feedback.</strong></p>
+            </div>
+             <a href="#scene-analyse" class="scroll-down-btn">
+                <i data-lucide="arrow-down" class="w-10 h-10"></i>
+            </a>
+        </section>
+
+        <section id="scene-analyse" class="summary-section">
+            <div class="max-w-4xl mx-auto">
+                <h1>Analyse: Die Säulen der Schule 2030</h1>
+                <p class="subtitle">Die Konzepte hinter Leos Schultag</p>
+                
+                <div class="grid md:grid-cols-3 gap-8 mt-12">
+                    <div class="pillar-card" style="border-top: 4px solid var(--color-scene-1);">
+                        <h2><i data-lucide="brain-circuit"></i><span>Neue Lernkultur</span> <span class="fact-icon-wrapper"><i data-lucide="info" class="fact-icon" data-fact="leistung"></i></span></h2>
+                        <p>Das Herzstück ist ein Wandel weg von der reinen Wissensvermittlung. Zukünftig rücken neue Fähigkeiten in den Vordergrund: Kreativität, Problemlösung und vor allem digitale Kompetenzen werden unabdingbar. Es geht darum, Schüler:innen zu befähigen, sich in einer komplexen Welt zurechtzufinden. Ziffernnoten verlieren an Gewicht zugunsten von formativem Feedback, das den Lernprozess begleitet.</p>
+                    </div>
+                    <div class="pillar-card" style="border-top: 4px solid var(--color-scene-2);">
+                        <h2><i data-lucide="heart-handshake"></i><span>Gelebte Inklusion</span> <span class="fact-icon-wrapper"><i data-lucide="info" class="fact-icon" data-fact="gerechtigkeit"></i></span></h2>
+                        <p>Vielfalt wird als Normalfall und Bereicherung verstanden, nicht als Problem. Multiprofessionelle Teams aus Lehrkräften, Sonderpädagogen und Sozialarbeitern gestalten den Unterricht gemeinsam (Team-Teaching), um allen Schüler:innen gerecht zu werden. Gute inklusive Pädagogik ist gute Pädagogik für alle.</p>
+                    </div>
+                    <div class="pillar-card" style="border-top: 4px solid var(--color-scene-3);">
+                        <h2><i data-lucide="home"></i><span>Gesunder Lebensraum</span> <span class="fact-icon-wrapper"><i data-lucide="info" class="fact-icon" data-fact="infrastruktur"></i></span></h2>
+                        <p>Die Architektur wird zum "dritten Pädagogen". Starre Klassenzimmer weichen flexiblen Lernlandschaften, die Interaktion und unterschiedliche Lernformen fördern. Gleichzeitig wird die mentale Gesundheit von Schüler:innen und Lehrkräften zur Kernaufgabe der Schulentwicklung, um einen sicheren und inspirierenden Ort zu schaffen.</p>
+                    </div>
+                </div>
+
+                 <div class="mt-16 text-center">
+                    <a href="#scene-start" class="px-6 py-2 font-semibold rounded-lg border-2" style="border-color: var(--color-primary); color: var(--color-primary);">Zurück zum Start</a>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <div id="modal" class="modal-backdrop">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3 id="modal-title"></h3>
-            </div>
-            <div class="modal-body"></div>
-            <div class="modal-footer">
-                <button id="modal-close-btn" class="modal-close-btn">Weiter</button>
-            </div>
-        </div>
+    <div id="fact-popover" class="hidden">
+        <div id="fact-popover-arrow"></div>
+        <p id="fact-popover-text" class="text-sm font-semibold text-justify"></p>
+        <p id="fact-popover-source" class="text-xs italic mt-2"></p>
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const scheduleData = [
-            { time: '8:00 - 9:30', title: 'Ankunft & Lernzeit', icon: 'home', content: { focus: 'Personalisiertes Lernen', text: 'Leo kommt nicht in ein starres Klassenzimmer, sondern in sein \'Lerncluster\'. Hier trifft er sein Team, checkt auf seinem Tablet seinen persönlichen Wochenplan und entscheidet, wo und wie er an seinen Zielen arbeiten möchte.' } },
-            { time: '9:50 - 10:35', title: 'Inklusiver Workshop', icon: 'users', content: { focus: 'Gelebte Vielfalt', text: 'Im Englisch-Workshop unterrichten zwei Lehrkräfte im Team-Teaching. So können sie Schüler mit unterschiedlichem Lerntempo gleichzeitig unterstützen, während Leo einer Mitschülerin bei einer Vokabel-App hilft.' } },
-            { time: '10:50 - 12:20', title: 'Projektarbeit', icon: 'lightbulb', content: { focus: 'Kompetenzorientierung', text: 'Statt getrenntem Unterricht arbeitet Leos Gruppe am fächerübergreifenden Projekt \'Nachhaltige Stadt\'. Sie recherchieren, entwerfen und präsentieren. Hier zählen Kreativität, Kommunikation und Teamfähigkeit.' } },
-            { time: '12:20 - 13:15', title: 'Mittagspause', icon: 'coffee', content: { focus: 'Schule als Lebensraum', text: 'Die Mittagspause findet in der "Lern-Oase" statt, einem offenen, hellen Raum, der als Treffpunkt, Essensbereich und Ort für Entspannung dient. Die Architektur selbst fördert die Gemeinschaft.' } },
-            { time: '13:15 - 13:30', title: 'Lerngespräch', icon: 'message-square', content: { focus: 'Formatives Feedback', text: 'Statt einer Note bekommt Leo ein persönliches Gespräch. Anhand seines digitalen Portfolios bespricht er mit seinem Lernbegleiter seine Fortschritte und nächsten Ziele. Das Ziel ist Lernen, nicht Vergleichen.' } }
-        ];
-
-        let currentState = {
-            activeIndex: 0,
-            completed: new Set()
-        };
-
-        function renderTimetable() {
-            const timetableContainer = document.getElementById('timetable-container');
-            if (!timetableContainer) return;
-            timetableContainer.innerHTML = '';
-            scheduleData.forEach((item, index) => {
-                const entry = document.createElement('div');
-                entry.className = 'timetable-entry';
-                entry.dataset.index = index;
-
-                let stateClass = 'locked';
-                if (index === currentState.activeIndex) {
-                    stateClass = 'active';
-                } else if (currentState.completed.has(index)) {
-                    stateClass = 'completed';
-                }
-                entry.classList.add(stateClass);
-
-                entry.innerHTML = `
-                    <div class="time">${item.time}</div>
-                    <i data-lucide="${currentState.completed.has(index) ? 'check-circle-2' : item.icon}" class="icon"></i>
-                    <div class="title">${item.title}</div>
-                `;
-                entry.addEventListener('click', () => handleEntryClick(index));
-                timetableContainer.appendChild(entry);
-            });
-            // Initialisierung der Lucide Icons nach dem Hinzufügen zum DOM
+        document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-        }
 
-        function handleEntryClick(index) {
-            if (index !== currentState.activeIndex) return;
-            
-            const item = scheduleData[index];
-            const modal = document.getElementById('modal');
-            const modalTitle = document.getElementById('modal-title');
-            const modalBody = document.getElementById('modal-body');
+            const scenes = document.querySelectorAll('.scene');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5 
+            };
 
-            if (modal && modalTitle && modalBody) {
-                modalTitle.textContent = item.content.focus;
-                modalBody.innerHTML = `<p>${item.content.text}</p>`;
-                modal.classList.add('open');
-            }
-        }
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                    }
+                });
+            }, observerOptions);
 
-        function advanceToNext() {
-            if (currentState.activeIndex === -1 && currentState.completed.size === scheduleData.length) return; // All completed and summary shown
-
-            currentState.completed.add(currentState.activeIndex);
-            
-            if (currentState.activeIndex < scheduleData.length - 1) {
-                currentState.activeIndex++;
-            } else {
-                currentState.activeIndex = -1; // Indicate all tasks are done
-                const summarySection = document.getElementById('summary-section');
-                if (summarySection) {
-                    summarySection.classList.remove('hidden');
-                    setTimeout(() => {
-                        summarySection.classList.add('visible');
-                        summarySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 300);
-                }
-            }
-
-            const progressBar = document.getElementById('progress-bar');
-            if(progressBar) {
-                const progressPercentage = (currentState.completed.size / scheduleData.length) * 100;
-                progressBar.style.width = `${progressPercentage}%`;
-            }
-
-            renderTimetable();
-        }
-        
-        const closeModalBtn = document.getElementById('modal-close-btn');
-        if(closeModalBtn) {
-            closeModalBtn.addEventListener('click', () => {
-                const modal = document.getElementById('modal');
-                if(modal) {
-                    // Start the closing animation
-                    modal.classList.remove('open');
-                }
-                // Wait for the animation to complete before advancing
-                setTimeout(() => {
-                    advanceToNext();
-                }, 300); // This timeout should match the modal's transition duration
+            scenes.forEach(scene => {
+                observer.observe(scene);
             });
-        }
 
-        renderTimetable();
-    });
+            const factIcons = document.querySelectorAll('.fact-icon-wrapper');
+            const popover = document.getElementById('fact-popover');
+            const popoverText = document.getElementById('fact-popover-text');
+            const popoverSource = document.getElementById('fact-popover-source');
+            const popoverArrow = document.getElementById('fact-popover-arrow');
+
+            const facts = {
+                leistung: { text: "Realität heute: Jeder vierte 15-jährige Jugendliche kann nicht richtig lesen, was für eine aktive gesellschaftliche Teilhabe notwendig wäre.", source: "Quelle: PISA (2022)" },
+                gerechtigkeit: { text: "Realität heute: Der Leistungsunterschied zwischen privilegierten und benachteiligten Jugendlichen beträgt 111 Kompetenzpunkte – das entspricht mehr als einem Schuljahr.", source: "Quelle: PISA (2022)" },
+                infrastruktur: { text: "Realität heute: Der Investitionsrückstand für die Sanierung von Schulgebäuden in Deutschland wird auf ca. 49,2 Milliarden Euro geschätzt.", source: "Quelle: KfW Kommunalpanel (2025)" }
+            };
+
+            factIcons.forEach(wrapper => {
+                wrapper.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const icon = e.currentTarget.querySelector('.fact-icon');
+                    const factKey = icon.dataset.fact;
+                    const factData = facts[factKey];
+                    
+                    popoverText.textContent = factData.text;
+                    popoverSource.textContent = factData.source;
+
+                    const iconRect = e.currentTarget.getBoundingClientRect();
+                    
+                    popover.style.left = `${window.scrollX + iconRect.left - (popover.offsetWidth / 2) + (iconRect.width / 2)}px`;
+                    popover.style.top = `${window.scrollY + iconRect.top - popover.offsetHeight - 10}px`;
+                    
+                    popoverArrow.style.left = '50%';
+                    popoverArrow.style.bottom = '-10px';
+                    popoverArrow.style.transform = 'translateX(-50%)';
+                    popoverArrow.style.borderColor = 'white transparent transparent transparent';
+                    popoverArrow.style.borderWidth = '10px 10px 0 10px';
+
+                    popover.classList.remove('hidden');
+                    setTimeout(() => popover.classList.add('visible'), 10);
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (popover && !popover.contains(e.target) && !e.target.closest('.fact-icon-wrapper')) {
+                    popover.classList.remove('visible');
+                    setTimeout(() => popover.classList.add('hidden'), 300);
+                }
+            });
+        });
     </script>
 </body>
 </html>
