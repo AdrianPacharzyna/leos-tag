@@ -53,13 +53,23 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .scene-icon {
-            width: 80px;
-            height: 80px;
-            color: var(--color-accent);
+        .scene-icon-group {
+            display: flex;
+            gap: 1.5rem;
             margin-bottom: 1.5rem;
+            color: var(--color-accent);
+        }
+
+        .scene-icon {
+            width: 50px;
+            height: 50px;
             stroke-width: 1.5;
         }
+        .scene-icon.main {
+            width: 70px;
+            height: 70px;
+        }
+
 
         .scene-title {
             font-size: 2.5rem;
@@ -73,6 +83,7 @@
             color: var(--color-text-light);
             line-height: 1.8;
             margin-bottom: 2.5rem;
+            text-align: justify;
         }
 
         .scroll-down-btn {
@@ -217,9 +228,13 @@
 
         <section id="scene-ankunft" class="scene" style="background-color: var(--color-scene-1);">
             <div class="scene-content">
-                <i data-lucide="home" class="scene-icon"></i>
+                <div class="scene-icon-group">
+                    <i data-lucide="layout-dashboard" class="scene-icon"></i>
+                    <i data-lucide="tablet" class="scene-icon main"></i>
+                    <i data-lucide="armchair" class="scene-icon"></i>
+                </div>
                 <h2 class="scene-title">8:00 - 9:30: Ankunft & Lernzeit</h2>
-                <p class="scene-text">Leo betritt kein Klassenzimmer, sondern sein 'Lerncluster'. An seinem Tablet checkt er seinen persönlichen Plan und entscheidet, wo und wie er an seinen Zielen arbeiten möchte. <strong>Hier steht personalisiertes Lernen im Mittelpunkt.</strong></p>
+                <p class="scene-text">Leo betritt kein starres Klassenzimmer, sondern sein 'Lerncluster'. Diese flexible Lernlandschaft bietet ihm verschiedene Zonen: ruhige Ecken für konzentriertes Arbeiten, große Tische für die Zusammenarbeit im Team und gemütliche Nischen zum Lesen. An seinem Tablet checkt er seinen persönlichen Wochenplan und entscheidet selbst, wo und wie er an seinen Zielen arbeiten möchte. <strong>Hier steht personalisiertes Lernen im Mittelpunkt.</strong></p>
             </div>
             <a href="#scene-workshop" class="scroll-down-btn">
                 <i data-lucide="arrow-down" class="w-10 h-10"></i>
@@ -228,9 +243,13 @@
 
         <section id="scene-workshop" class="scene" style="background-color: var(--color-scene-2);">
             <div class="scene-content">
-                <i data-lucide="users" class="scene-icon"></i>
+                <div class="scene-icon-group">
+                    <i data-lucide="user-check" class="scene-icon"></i>
+                    <i data-lucide="users" class="scene-icon main"></i>
+                    <i data-lucide="heart-handshake" class="scene-icon"></i>
+                </div>
                 <h2 class="scene-title">9:50 - 10:35: Inklusiver Workshop</h2>
-                <p class="scene-text">Im Englisch-Workshop unterrichten zwei Lehrkräfte im Team-Teaching. So kann eine Schülerin mit LRS gezielt gefördert werden, während Leo einem neuen Mitschüler bei der Aussprache hilft. <strong>Hier wird Vielfalt als Stärke gelebt.</strong></p>
+                <p class="scene-text">Im Englisch-Workshop unterrichten heute zwei Lehrkräfte im Team-Teaching. Dies ermöglicht es, auf die unterschiedlichen Bedürfnisse der Schüler:innen einzugehen. Während eine Schülerin mit Lese-Rechtschreib-Schwäche gezielte Unterstützung bei einer Vokabel-App erhält, hilft Leo einem neuen Mitschüler, der erst seit kurzem in Deutschland ist, bei der korrekten Aussprache. <strong>Hier wird Vielfalt als Stärke gelebt.</strong></p>
             </div>
              <a href="#scene-projekt" class="scroll-down-btn">
                 <i data-lucide="arrow-down" class="w-10 h-10"></i>
@@ -239,9 +258,13 @@
 
         <section id="scene-projekt" class="scene" style="background-color: var(--color-scene-3);">
             <div class="scene-content">
-                <i data-lucide="lightbulb" class="scene-icon"></i>
+                 <div class="scene-icon-group">
+                    <i data-lucide="compass" class="scene-icon"></i>
+                    <i data-lucide="lightbulb" class="scene-icon main"></i>
+                    <i data-lucide="drafting-compass" class="scene-icon"></i>
+                </div>
                 <h2 class="scene-title">10:50 - 12:20: Projektarbeit</h2>
-                <p class="scene-text">Leos Gruppe arbeitet am Projekt 'Nachhaltige Stadt'. Es geht weniger darum, Fakten auswendig zu lernen, als vielmehr darum, Fähigkeiten wie Kreativität, Kommunikation und Teamfähigkeit an einem realen Problem anzuwenden. <strong>Ein solcher Ansatz legt den Grundstein für eine moderne Kompetenzorientierung.</strong></p>
+                <p class="scene-text">Leos Gruppe arbeitet heute fächerübergreifend am Projekt 'Nachhaltige Stadt'. Statt nur Fakten auswendig zu lernen, wenden sie ihr Wissen praktisch an. Sie recherchieren online, entwerfen im Team ein 3D-Modell und bereiten eine Präsentation vor. Gefragt sind hier die Zukunftskompetenzen: Kreativität, Kommunikation, Kollaboration und kritisches Denken. <strong>Ein solcher Ansatz legt den Grundstein für eine moderne Kompetenzorientierung.</strong></p>
             </div>
              <a href="#scene-pause" class="scroll-down-btn">
                 <i data-lucide="arrow-down" class="w-10 h-10"></i>
@@ -250,9 +273,13 @@
 
         <section id="scene-pause" class="scene" style="background-color: #f9f8f2;">
             <div class="scene-content">
-                <i data-lucide="coffee" class="scene-icon"></i>
+                <div class="scene-icon-group">
+                    <i data-lucide="utensils" class="scene-icon"></i>
+                    <i data-lucide="coffee" class="scene-icon main"></i>
+                    <i data-lucide="sofa" class="scene-icon"></i>
+                </div>
                 <h2 class="scene-title">12:20 - 13:15: Mittagspause</h2>
-                <p class="scene-text">Die Pause findet in der "Lern-Oase" statt – einem offenen Raum zum Essen, Reden und Entspannen. Die Architektur selbst fördert die Gemeinschaft. <strong>Hier wird Schule zum Lebensraum.</strong></p>
+                <p class="scene-text">Die Pause findet nicht nur in einer lauten Mensa statt, sondern in der zentralen 'Lern-Oase'. Dieser offene, helle Raum ist Treffpunkt, Essensbereich und Ort für Entspannung zugleich. Die Architektur selbst fördert die Gemeinschaft und das Wohlbefinden aller. <strong>Hier wird Schule zum Lebensraum.</strong></p>
             </div>
              <a href="#scene-feedback" class="scroll-down-btn">
                 <i data-lucide="arrow-down" class="w-10 h-10"></i>
@@ -261,9 +288,13 @@
 
         <section id="scene-feedback" class="scene" style="background-color: var(--color-scene-1);">
             <div class="scene-content">
-                <i data-lucide="message-square" class="scene-icon"></i>
+                <div class="scene-icon-group">
+                    <i data-lucide="clipboard-check" class="scene-icon"></i>
+                    <i data-lucide="message-square" class="scene-icon main"></i>
+                    <i data-lucide="trending-up" class="scene-icon"></i>
+                </div>
                 <h2 class="scene-title">13:15 - 13:30: Lerngespräch</h2>
-                <p class="scene-text">Statt einer Note bekommt Leo ein persönliches Gespräch. Anhand seines digitalen Portfolios bespricht er mit seinem Lernbegleiter seine Fortschritte und nächsten Ziele. Ziffernnoten verlieren an Gewicht. <strong>Hier zählt formatives Feedback.</strong></p>
+                <p class="scene-text">Anstelle einer klassischen Klassenarbeit bekommt Leo heute ein persönliches Lerngespräch. Anhand seines digitalen Portfolios, in dem er seine Lernfortschritte dokumentiert hat, bespricht er mit seinem Lernbegleiter seine Stärken und nächsten Ziele. Ziffernnoten verlieren an Gewicht. <strong>Hier zählt formatives Feedback, das den Lernprozess begleitet.</strong></p>
             </div>
              <a href="#scene-analyse" class="scroll-down-btn">
                 <i data-lucide="arrow-down" class="w-10 h-10"></i>
