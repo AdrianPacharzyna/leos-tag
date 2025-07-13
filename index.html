@@ -55,6 +55,8 @@
 
         .scene-icon-group {
             display: flex;
+            justify-content: center;
+            align-items: center;
             gap: 1.5rem;
             margin-bottom: 1.5rem;
             color: var(--color-accent);
@@ -249,7 +251,7 @@
                     <i data-lucide="heart-handshake" class="scene-icon"></i>
                 </div>
                 <h2 class="scene-title">9:50 - 10:35: Inklusiver Workshop</h2>
-                <p class="scene-text">Im Englisch-Workshop unterrichten heute zwei Lehrkräfte im Team-Teaching. Dies ermöglicht es, auf die unterschiedlichen Bedürfnisse der Schüler:innen einzugehen. Während eine Schülerin mit Lese-Rechtschreib-Schwäche gezielte Unterstützung bei einer Vokabel-App erhält, hilft Leo einem neuen Mitschüler, der erst seit kurzem in Deutschland ist, bei der korrekten Aussprache. <strong>Hier wird Vielfalt als Stärke gelebt.</strong></p>
+                <p class="scene-text">Im Englisch-Workshop unterrichten zwei Lehrkräfte im Team-Teaching. Dies ermöglicht es, auf die unterschiedlichen Bedürfnisse der Schüler:innen einzugehen. Während eine Schülerin mit Lese-Rechtschreib-Schwäche gezielte Unterstützung bei einer Vokabel-App erhält, hilft Leo einem neuen Mitschüler, der erst seit kurzem in Deutschland ist, bei der korrekten Aussprache. <strong>Hier wird Vielfalt als Stärke gelebt.</strong></p>
             </div>
              <a href="#scene-projekt" class="scroll-down-btn">
                 <i data-lucide="arrow-down" class="w-10 h-10"></i>
@@ -279,7 +281,7 @@
                     <i data-lucide="sofa" class="scene-icon"></i>
                 </div>
                 <h2 class="scene-title">12:20 - 13:15: Mittagspause</h2>
-                <p class="scene-text">Die Pause findet nicht nur in einer lauten Mensa statt, sondern in der zentralen 'Lern-Oase'. Dieser offene, helle Raum ist Treffpunkt, Essensbereich und Ort für Entspannung zugleich. Die Architektur selbst fördert die Gemeinschaft und das Wohlbefinden aller. <strong>Hier wird Schule zum Lebensraum.</strong></p>
+                <p class="scene-text">Die Pause findet in der "Lern-Oase" statt – einem offenen Raum zum Essen, Reden und Entspannen. Die Architektur selbst fördert die Gemeinschaft. <strong>Hier wird Schule zum Lebensraum.</strong></p>
             </div>
              <a href="#scene-feedback" class="scroll-down-btn">
                 <i data-lucide="arrow-down" class="w-10 h-10"></i>
@@ -364,9 +366,9 @@
             const popoverArrow = document.getElementById('fact-popover-arrow');
 
             const facts = {
-                leistung: { text: "Realität heute: Jeder vierte 15-jährige Jugendliche kann nicht richtig lesen, was für eine aktive gesellschaftliche Teilhabe notwendig wäre.", source: "Quelle: PISA (2022)" },
-                gerechtigkeit: { text: "Realität heute: Der Leistungsunterschied zwischen privilegierten und benachteiligten Jugendlichen beträgt 111 Kompetenzpunkte – das entspricht mehr als einem Schuljahr.", source: "Quelle: PISA (2022)" },
-                infrastruktur: { text: "Realität heute: Der Investitionsrückstand für die Sanierung von Schulgebäuden in Deutschland wird auf ca. 49,2 Milliarden Euro geschätzt.", source: "Quelle: KfW Kommunalpanel (2025)" }
+                leistung: { text: "Realität heute: Rund ein Fünftel der 15-jährigen Jugendlichen ist kaum in der Lage, den Sinn von Texten zu erfassen und zu reflektieren.", source: "Quelle: PISA (2022)" },
+                gerechtigkeit: { text: "Realität heute: Während 96% der Lehrkräfte eine ständige Doppelbesetzung aus Lehrkraft und Sonderpädagoge für zwingend notwendig halten, geben nur 4% an, dass dies an ihrer Schule auch tatsächlich immer der Fall ist.", source: "Quelle: forsa-Umfrage im Auftrag des VBE (2025)" },
+                infrastruktur: { text: "Realität heute: Der Investitionsrückstand allein für Schulgebäude in Deutschland wird auf ca. 67,8 Milliarden Euro geschätzt.", source: "Quelle: KfW Kommunalpanel (2025)" }
             };
 
             factIcons.forEach(wrapper => {
